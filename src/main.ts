@@ -6,12 +6,10 @@ import router from './router';
 import { usePermissStore } from './store/permiss';
 import 'element-plus/dist/index.css';
 import './assets/css/icon.css';
-import dialogDrag from './assets/js/dialogDrag.js'
 
 const app = createApp(App);
 app.use(createPinia());
 app.use(router);
-app.use(dialogDrag);
 
 // 注册elementplus图标
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {

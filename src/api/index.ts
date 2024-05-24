@@ -1,9 +1,13 @@
 import request from '../utils/request';
 
-export const fetchData = () => {
+export const fetchData = (page?: Number, size?: Number) => {
     return request({
         url: './mock/table.json',
-        method: 'get'
+        method: 'get',
+        params: {
+            page: page,
+            size: size
+        },
     });
 };
 

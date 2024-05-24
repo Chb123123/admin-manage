@@ -35,7 +35,7 @@
                 </el-tooltip>
             </div>
         </div>
-        <el-table class="mgb20" :height="tableHeight" :style="{ width: '100%' }" border :data="tableData" :row-key="rowKey"
+        <el-table class="mgb20" :height='tableHeight' :style="{ width: '100%' }" border :data="tableData" :row-key="rowKey"
             @selection-change="handleSelectionChange" table-layout="auto">
             <template v-for="item in columns" :key="item.prop">
                 <el-table-column v-if="item.visible" :prop="item.prop" :label="item.label" :width="item.width"
@@ -148,7 +148,7 @@ const props = defineProps({
     },
     tableHeight: {
         type: Number,
-        default: 300
+        default: 400
     }
 })
 

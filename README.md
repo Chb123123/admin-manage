@@ -7,26 +7,9 @@
     <img src="https://img.shields.io/github/license/mashape/apistatus.svg" alt="license">
   </a>
 
-基于 Vue3 + pinia + Element Plus 的后台管理系统解决方案。[线上演示](https://lin-xin.gitee.io/example/vue-manage-system/)
+基于 Vue3 + pinia + Element Plus 的后台管理系统解决方案。
 
-> Vue2 版本请看 [tag-V4.2.0](https://github.com/lin-xin/vue-manage-system/tree/V4.2.0)，带后台功能请看 [tsrpc-manage-system](https://github.com/lin-xin/tsrpc-manage-system)
 
-[文档地址](https://lin-xin.gitee.io/example/vuems-doc/)
-[English document](https://github.com/lin-xin/manage-system/blob/master/README_EN.md)
-
-## 赞助商
-
-### 好问
-
-[<img src="https://static.bestqa.net/logo/bestqa_haowen.png" width="220" height="100">](https://www.bestqa.net/home/index.html)
-
-专业问卷服务，一对一客服，按需定制
-
-## 支持作者
-
-请作者喝杯咖啡吧！(微信号：linxin_20)
-
-![微信扫一扫](https://lin-xin.gitee.io/images/weixin.jpg)
 
 ## 前言
 
@@ -54,9 +37,9 @@
 > 因为使用 vite3，node 版本需要 14.18+
 
 ```
-git clone https://github.com/lin-xin/vue-manage-system.git      // 把模板下载到本地
-cd vue-manage-system    // 进入模板目录
-npm install         // 安装项目依赖，等待安装完成之后，安装失败可用 cnpm 或 yarn
+git clone https://github.com/Chb123123/admin-manage.git    // 把模板下载到本地
+cd admin-manage    // 进入模板目录
+npm install  
 
 // 运行
 npm run dev
@@ -69,12 +52,11 @@ npm run build
 
 ### 首页
 
-![Image text](https://github.com/lin-xin/manage-system/raw/master/screenshots/wms1.png)
+
 
 ### 登录
 
-![Image text](https://github.com/lin-xin/manage-system/raw/master/screenshots/wms3.png)
+
 
 ## License
 
-[MIT](https://github.com/lin-xin/vue-manage-system/blob/master/LICENSE)

@@ -55,7 +55,8 @@ let columns = ref([
 ])
 
 const getOptions = (data: any) => {
-    return data.map(item => {
+    console.log(data)
+    return data.map((item: any) => {
         const a: any = {
             label: item.title,
             value: item.id,

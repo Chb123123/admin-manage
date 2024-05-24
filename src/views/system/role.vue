@@ -17,11 +17,11 @@
                 </template>
             </TableCustom>
         </div>
-        <el-dialog :title="isEdit ? '编辑' : '新增'" v-model="visible" width="700px" destroy-on-close
+        <el-dialog :draggable="true" :title="isEdit ? '编辑' : '新增'" v-model="visible" width="700px" destroy-on-close
             :close-on-click-modal="false" @close="closeDialog">
             <TableEdit :form-data="rowData" :options="options" :edit="isEdit" :update="updateData" />
         </el-dialog>
-        <el-dialog title="查看详情" v-model="visible1" width="700px" destroy-on-close>
+        <el-dialog title="查看详情" v-model="visible1" width="700px" destroy-on-close :draggable="true">
             <TableDetail :data="viewData">
                 <template #status="{ rows }">
                     <el-tag type="success" v-if="rows.status">启用</el-tag>
