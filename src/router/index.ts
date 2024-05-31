@@ -329,20 +329,20 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
 	NProgress.start();
-	const role = localStorage.getItem('vuems_name');
-	const permiss = usePermissStore();
-
+	const role = localStorage.getItem('webiteToken');
+	// const permiss = usePermissStore();
 	if (!role && to.meta.noAuth !== true) {
 		next('/login');
-	} else if (
-		typeof to.meta.permiss == 'string' &&
-		!permiss.key.includes(to.meta.permiss)
-	) {
-		// 如果没有权限，则进入403
-		next('/403');
 	} else {
 		next();
 	}
+	// else if (
+	// 	typeof to.meta.permiss == 'string' &&
+	// 	!permiss.key.includes(to.meta.permiss)
+	// ) {
+	// 	// 如果没有权限，则进入403
+	// 	next('/403');
+	// }
 });
 
 router.afterEach(() => {

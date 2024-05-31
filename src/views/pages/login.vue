@@ -7,7 +7,7 @@
 			</div>
 			<el-form :model="param" :rules="rules" ref="login" size="large">
 				<el-form-item prop="username">
-					<el-input v-model="param.username" placeholder="用户名">
+					<el-input v-model="param.accountNumber" placeholder="用户名">
 						<template #prepend>
 							<el-icon>
 								<User />
@@ -62,25 +62,27 @@ import { useTabsStore } from '@/store/tabs';
 import { usePermissStore } from '@/store/permiss';
 import { useRouter } from 'vue-router';
 import { ElMessage } from 'element-plus';
+import { loginUser, getUserLimit } from '@/api/user';
 import type { FormInstance, FormRules } from 'element-plus';
 
 interface LoginInfo {
-	username: string;
+	accountNumber: string;
 	password: string;
 }
 
+// 本地保存登入账号
 const lgStr = localStorage.getItem('login-param');
 const defParam = lgStr ? JSON.parse(lgStr) : null;
 const checked = ref(lgStr ? true : false);
 
 const router = useRouter();
 const param = reactive<LoginInfo>({
-	username: defParam ? defParam.username : '',
+	accountNumber: defParam ? defParam.accountNumber : '',
 	password: defParam ? defParam.password : '',
 });
 
 const rules: FormRules = {
-	username: [
+	accountNumber: [
 		{
 			required: true,
 			message: '请输入用户名',
@@ -92,19 +94,30 @@ const rules: FormRules = {
 const permiss = usePermissStore();
 const login = ref<FormInstance>();
 const submitForm = (formEl: FormInstance | undefined) => {
+	console.log(formEl);
 	if (!formEl) return;
-	formEl.validate((valid: boolean) => {
+	formEl.validate(async (valid: boolean) => {
 		if (valid) {
-			ElMessage.success('登录成功');
-			localStorage.setItem('vuems_name', param.username);
-			const keys =
-				permiss.defaultList[param.username == 'admin' ? 'admin' : 'user'];
-			permiss.handleSet(keys);
-			router.push('/');
-			if (checked.value) {
-				localStorage.setItem('login-param', JSON.stringify(param));
+			let res = await loginUser(param);
+			if (res.data.status === 1) {
+				let token = res.data.token;
+				localStorage.setItem('webiteToken', token);
+				let res1 = await getUserLimit();
+				if (res1.data.status === 1) {
+					localStorage.setItem('vuems_name', param.accountNumber);
+					// 保存账号信息
+					if (checked.value) {
+						localStorage.setItem('login-param', JSON.stringify(param));
+					} else {
+						localStorage.removeItem('login-param');
+					}
+					ElMessage.success('登录成功');
+					router.push('/');
+				} else {
+					ElMessage.error(res1.data.message);
+				}
 			} else {
-				localStorage.removeItem('login-param');
+				ElMessage.error(res.data.message);
 			}
 		} else {
 			ElMessage.error('登录失败');

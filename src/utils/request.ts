@@ -4,6 +4,7 @@ import axios, {
 	AxiosResponse,
 	InternalAxiosRequestConfig,
 } from 'axios';
+import router from '@/router/index';
 
 const service: AxiosInstance = axios.create({
 	baseURL: 'http://127.0.0.1',
@@ -28,13 +29,12 @@ service.interceptors.request.use(
 
 service.interceptors.response.use(
 	(response: AxiosResponse) => {
-		if (response.data.status === 200) {
-			return response;
-		} else if (response.data.status === 2) {
+		if (response.data.status === 2) {
 			localStorage.removeItem('webiteToken');
-		} else {
-			Promise.reject();
+			router.push("/login")
+			return response;
 		}
+		return response;
 	},
 	(error: AxiosError) => {
 		console.log(error);

@@ -8,7 +8,7 @@
 		/>
 		<div class="container" id="container">
 			<TableCustom
-				:tableHeight="tableHeight"
+				:tableHeight="tableHeight + 'px'"
 				:columns="columns"
 				:tableData="tableData"
 				:total="page.total"
@@ -109,11 +109,11 @@ const getData = async () => {
 	tableData.value = res.data.list;
 	page.total = res.data.pageTotal;
 };
-getData();
+// getData();
 
 const changePage = (val: number) => {
 	page.index = val;
-	getData();
+	// getData();
 };
 
 // 新增/编辑弹窗相关
@@ -138,7 +138,7 @@ const handleEdit = (row: User) => {
 };
 const updateData = () => {
 	closeDialog();
-	getData();
+	// getData();
 };
 
 const closeDialog = () => {

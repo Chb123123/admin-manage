@@ -7,3 +7,13 @@ export interface Menus {
     permiss?: string;
     children?: Menus[];
 }
+
+export interface SysTemTree {
+    id: Number;
+    parentId?: Number;
+    path: String;
+    zIndex: Number;
+    icon?: string;
+    title: string;
+    children?: SysTemTree[];
+}

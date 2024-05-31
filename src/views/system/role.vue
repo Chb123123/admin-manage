@@ -74,13 +74,14 @@ const page = reactive({
 const tableData = ref<Role[]>([]);
 const getData = async () => {
     const res = await fetchRoleData()
+    console.log(res)
     tableData.value = res.data.list;
     page.total = res.data.pageTotal;
 };
-getData();
+// getData();
 const changePage = (val: number) => {
     page.index = val;
-    getData();
+    // getData();
 };
 
 // 新增/编辑弹窗相关
@@ -103,7 +104,7 @@ const handleEdit = (row: Role) => {
 };
 const updateData = () => {
     closeDialog();
-    getData();
+    // getData();
 };
 const closeDialog = () => {
     visible.value = false;

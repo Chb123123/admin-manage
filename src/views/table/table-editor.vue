@@ -61,7 +61,7 @@ const getData = async () => {
 	const res = await fetchUserData();
 	tableData.value = res.data.list;
 };
-getData();
+// getData();
 
 const rowData = ref({})
 

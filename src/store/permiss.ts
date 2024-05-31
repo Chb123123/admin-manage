@@ -53,7 +53,7 @@ export const usePermissStore = defineStore('permiss', {
         };
     },
     actions: {
-        handleSet(val: string[]) {
+        handleSet(val: Number[]) {
             this.key = val;
         },
     },

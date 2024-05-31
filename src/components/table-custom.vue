@@ -147,8 +147,8 @@ const props = defineProps({
         default: true
     },
     tableHeight: {
-        type: Number,
-        default: 400
+        type: String,
+        default: '400px'
     }
 })
 
@@ -170,7 +170,6 @@ columns.value.forEach((item) => {
         item.visible = true
     }
 })
-
 // 当选择项发生变化时会触发该事件
 const multipleSelection = ref([])
 const handleSelectionChange = (selection: any[]) => {
@@ -182,7 +181,7 @@ const handleCurrentChange = (val: number) => {
     props.changePage(val)
 }
 
-const handleDelete = (row) => {
+const handleDelete = (row: any) => {
     ElMessageBox.confirm('确定要删除吗？', '提示', {
         type: 'warning'
     })

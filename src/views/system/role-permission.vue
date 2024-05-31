@@ -14,9 +14,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, reactive } from 'vue';
 import { ElTree } from 'element-plus';
 import { menuData } from '@/components/menu';
+import { getSysTemTree } from '@/api/system'
 
 const props = defineProps({
     permissOptions: {
@@ -24,6 +25,18 @@ const props = defineProps({
         required: true,
     },
 });
+
+
+
+let treeData = reactive([])
+const getTree = async () => {
+    const res = await getSysTemTree()
+    try {
+        treeData = res.data.queryData
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 const menuObj = ref({});
 // const data = menuData.map((item) => {
@@ -55,7 +68,7 @@ const getTreeData = (data) => {
         return obj;
     });
 };
-const data = getTreeData(menuData);
+const data = getTreeData(treeData);
 const checkData = (data: string[]) => {
     return data.filter((item) => {
         return !menuObj.value[item] || data.toString().includes(menuObj.value[item].toString());
