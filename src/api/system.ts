@@ -45,3 +45,16 @@ export const editTreeNode = (data: Object) => {
       data: data
   });
 };
+
+// 获取用户列表
+export const getUserList = (name: String, page: Number = 1, size: Number = 10) => {
+  return request({
+      url: '/api/user/page',
+      method: 'get',
+      params: {
+        name: name,
+        page: page,
+        size: size
+      }
+  });
+};

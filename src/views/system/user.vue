@@ -8,7 +8,7 @@
 		/>
 		<div class="container" id="container">
 			<TableCustom
-				:tableHeight="tableHeight + 'px'"
+				tableHeight="calc(100vh - 380px)"
 				:columns="columns"
 				:tableData="tableData"
 				:total="page.total"
@@ -24,6 +24,22 @@
 						@click="visible = true"
 						>新增</el-button
 					>
+				</template>
+				<template #userPic="userPic">
+					<el-image
+						style="width: 50px; height: 50px"
+						:src="userPic.rows.userPic"
+						:zoom-rate="1.2"
+						:max-scale="7"
+						:min-scale="0.2"
+						:preview-src-list="[userPic.rows.userPic]"
+						:initial-index="0"
+						fit="cover"
+						:z-index="999"
+					/>
+				</template>
+				<template #createTime="createTime">
+					<span>{{ getCreateTime(createTime.rows.createTime) }}</span>
 				</template>
 			</TableCustom>
 		</div>
@@ -55,47 +71,47 @@
 </template>
 
 <script setup lang="ts" name="system-user">
-import { ref, reactive, nextTick, onMounted } from 'vue';
-import { ElMessage } from 'element-plus';
+import { ref, reactive } from 'vue';
+import { ElMessage, ImageProps } from 'element-plus';
 import { CirclePlusFilled } from '@element-plus/icons-vue';
 import { User } from '@/types/user';
-import { fetchUserData } from '@/api';
+import { getUserList } from '@/api/system';
 import TableCustom from '@/components/table-custom.vue';
 import TableDetail from '@/components/table-detail.vue';
 import TableSearch from '@/components/table-search.vue';
 import { FormOption, FormOptionList } from '@/types/form-option';
-
-let tableHeight = ref(400)
-onMounted(() => {
-	nextTick(() => {
-		const el = document.getElementById('container'); // 替换成你需要获取距离的元素的 ID
-		if (el) {
-			const rect = el.getBoundingClientRect();
-			const distanceToBottom = window.innerHeight - rect.bottom;
-			// console.log('距离底部的距离：', distanceToBottom);
-			tableHeight.value = el.offsetHeight - 176 + distanceToBottom
-			// console.log('元素高度：' + tableHeight.value)
-		}
-	});
-});
 
 // 查询相关
 const query = reactive({
 	name: '',
 });
 const searchOpt = ref<FormOptionList[]>([
-	{ type: 'input', label: '用户名：', prop: 'name' },
+	{ type: 'input', label: '用户名：', prop: 'accountNumber' },
 ]);
-const handleSearch = () => {
+const handleSearch = (data: Object) => {
 	changePage(1);
+	console.log(data);
 };
+
+const getCreateTime = (str: String) => {
+	let timeStr = str.replace('.000Z', '')
+	let timeList = timeStr.split('T')
+	let hour = parseInt(timeList[1].split(':')[0])
+	hour += 8
+	let newHour = hour > 10? hour + '':'0'+hour
+	console.log(timeList)
+	console.log(newHour)
+	return str
+}
 
 // 表格相关
 let columns = ref([
 	{ type: 'index', label: '序号', width: 55, align: 'center' },
-	{ prop: 'name', label: '用户名' },
-	{ prop: 'phone', label: '手机号' },
-	{ prop: 'role', label: '角色' },
+	{ prop: 'userName', label: '昵称' },
+	{ prop: 'userPic', label: '头像' },
+	{ prop: 'accountNumber', label: '用户名' },
+	{ prop: 'userRankName', label: '角色' },
+	{ prop: 'createTime', label: '创建时间' },
 	{ prop: 'operator', label: '操作', width: 250 },
 ]);
 const page = reactive({
@@ -105,11 +121,15 @@ const page = reactive({
 });
 const tableData = ref<User[]>([]);
 const getData = async () => {
-	const res = await fetchUserData();
-	tableData.value = res.data.list;
-	page.total = res.data.pageTotal;
+	const res = await getUserList('');
+	if (res.data.status === 1) {
+		tableData.value = res.data.queryData.rows;
+		page.total = res.data.queryData.total;
+	} else {
+		ElMessage.error(res.data.message);
+	}
 };
-// getData();
+getData();
 
 const changePage = (val: number) => {
 	page.index = val;
@@ -121,7 +141,7 @@ let options = ref<FormOption>({
 	labelWidth: '100px',
 	span: 12,
 	list: [
-		{ type: 'input', label: '用户名', prop: 'name', required: true },
+		{ type: 'input', label: '用户名', prop: 'accountNumber', required: true },
 		{ type: 'input', label: '手机号', prop: 'phone', required: true },
 		{ type: 'input', label: '密码', prop: 'password', required: true },
 		{ type: 'input', label: '邮箱', prop: 'email', required: true },
@@ -153,34 +173,30 @@ const viewData = ref({
 	list: [],
 });
 const handleView = (row: User) => {
-	viewData.value.row = { ...row };
+	viewData.value.row = JSON.parse(JSON.stringify(row));
 	viewData.value.list = [
 		{
-			prop: 'id',
+			prop: 'userId',
 			label: '用户ID',
 		},
 		{
-			prop: 'name',
+			prop: 'accountNumber',
 			label: '用户名',
 		},
 		{
-			prop: 'password',
-			label: '密码',
+			prop: 'userName',
+			label: '昵称',
 		},
 		{
-			prop: 'email',
-			label: '邮箱',
+			prop: 'userSignature',
+			label: '签名',
 		},
 		{
-			prop: 'phone',
-			label: '电话',
-		},
-		{
-			prop: 'role',
+			prop: 'userRankName',
 			label: '角色',
 		},
 		{
-			prop: 'date',
+			prop: 'createTime',
 			label: '注册日期',
 		},
 	];

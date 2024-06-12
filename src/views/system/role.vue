@@ -3,7 +3,7 @@
         <TableSearch :query="query" :options="searchOpt" :search="handleSearch" />
         <div class="container">
 
-            <TableCustom :columns="columns" :tableData="tableData" :total="page.total" :viewFunc="handleView"
+            <TableCustom :columns="columns" tableHeight="calc(100vh - 380px)" :tableData="tableData" :total="page.total" :viewFunc="handleView"
                 :delFunc="handleDelete" :page-change="changePage" :editFunc="handleEdit">
                 <template #toolbarBtn>
                     <el-button type="warning" :icon="CirclePlusFilled" @click="visible = true">新增</el-button>
