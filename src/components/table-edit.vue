@@ -52,7 +52,7 @@
 					<el-upload
 						v-else-if="item.type === 'upload'"
 						class="avatar-uploader"
-						action="#"
+						action="http://127.0.0.1/my/upload/system/img"
 						:show-file-list="false"
 						:on-success="handleAvatarSuccess"
 					>
@@ -74,10 +74,10 @@
 
 <script lang="ts" setup>
 import { FormOption } from '@/types/form-option';
-import { FormInstance, FormRules, UploadProps } from 'element-plus';
+import { FormInstance, FormRules, UploadProps, ElMessage } from 'element-plus';
 import { PropType, ref } from 'vue';
 
-const { options, formData, edit, update } = defineProps({
+const { options, formData, edit, update, imgStr } = defineProps({
 	options: {
 		type: Object as PropType<FormOption>,
 		required: true,
@@ -85,6 +85,11 @@ const { options, formData, edit, update } = defineProps({
 	formData: {
 		type: Object,
 		required: true,
+	},
+	imgStr: {
+		type: String,
+		required: false,
+		default: "url"
 	},
 	edit: {
 		type: Boolean,
@@ -124,7 +129,12 @@ const handleAvatarSuccess: UploadProps['onSuccess'] = (
 	response,
 	uploadFile
 ) => {
-	form.value.thumb = URL.createObjectURL(uploadFile.raw!);
+	console.log(response.location)
+	if(response.status === 1) {
+		form.value[imgStr] = response.location
+	} else {
+		ElMessage.error(response.message);
+	}
 };
 </script>
 
@@ -140,6 +150,11 @@ const handleAvatarSuccess: UploadProps['onSuccess'] = (
 
 .avatar-uploader .el-upload:hover {
 	border-color: var(--el-color-primary);
+}
+
+.avatar {
+	height: 150px;
+	width: 150px;
 }
 
 .el-icon.avatar-uploader-icon {

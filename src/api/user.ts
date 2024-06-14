@@ -21,3 +21,13 @@ export const getUserLimit = () => {
       url: '/api/getUserLimit'
   });
 };
+
+// 根据id获取用户权限
+export const getIdUserLimit = (id: Number) => {
+  return request({
+      url: '/api/userLimit/get',
+      params: {
+        id: id
+      }
+  });
+};

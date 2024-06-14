@@ -37,6 +37,17 @@ const routes: RouteRecordRaw[] = [
 					),
 			},
 			{
+				path: '/system-userLimit',
+				name: 'system-userLimit',
+				meta: {
+					title: '用户权限',
+				},
+				component: () =>
+					import(
+						/* webpackChunkName: "system-user" */ '../views/system/userLimit.vue'
+					),
+			},
+			{
 				path: '/system-role',
 				name: 'system-role',
 				meta: {
