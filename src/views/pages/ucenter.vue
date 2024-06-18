@@ -78,14 +78,7 @@
                     </el-tab-pane>
                     <el-tab-pane name="label4" label="赞赏作者" class="user-tabpane">
                         <div class="plugins-tips">
-                            如果该框架
-                            <el-link href="https://github.com/lin-xin/vue-manage-system" target="_blank"
-                                >vue-manage-system</el-link
-                            >
-                            对你有帮助，那就请作者喝杯饮料吧！<el-icon>
-                                <ColdDrink />
-                            </el-icon>
-                            加微信号 linxin_20 探讨问题。
+                            欢迎添加微信
                         </div>
                         <div>
                             <img src="https://lin-xin.gitee.io/images/weixin.jpg" />

@@ -22,7 +22,6 @@
 						:zoom-rate="1.2"
 						:max-scale="7"
 						:min-scale="0.2"
-						:preview-src-list="[userPic.rows.userPic]"
 						:initial-index="0"
 						fit="cover"
 						:z-index="999"
