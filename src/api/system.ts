@@ -1,5 +1,4 @@
 import request from '../utils/request';
-import { SysTemTree } from '@/types/menu';
 
 // 获取所有树形节点 管理员查看
 export const getAllSysTemTree = () => {
@@ -96,5 +95,17 @@ export const getRoleList = () => {
 	return request({
 		url: '/api/role/list',
 		method: 'get',
+	});
+};
+
+// 获取角色列表
+export const getRolePage = (page: Number = 1, size: Number = 10) => {
+	return request({
+		url: '/api/role/page',
+		method: 'get',
+		params: {
+			size: size,
+			page: page
+		}
 	});
 };

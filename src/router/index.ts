@@ -281,6 +281,16 @@ const routes: RouteRecordRaw[] = [
 						/* webpackChunkName: "statistic" */ '../views/element/statistic.vue'
 					),
 			},
+			{
+				path: '/article',
+				name: 'article',
+				meta: {
+					title: '文章列表',
+					noAuth: true,
+				},
+				component: () =>
+					import(/* webpackChunkName: "dashboard" */ '../views/article/articleList.vue'),
+			}
 		],
 	},
 	{
